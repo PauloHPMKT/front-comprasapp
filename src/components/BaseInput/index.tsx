@@ -1,16 +1,19 @@
 import { InputHTMLAttributes, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { FieldError } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   hasError?: FieldError | undefined;
+  customStyle?: string;
 }
 
 export function BaseInput({
   placeholder,
   type = 'text',
   hasError,
+  customStyle,
   ...props
 }: BaseInputProps) {
   const [inputType, setInputType] = useState(type);
@@ -26,14 +29,15 @@ export function BaseInput({
 
   return (
     <div
-      className={
+      className={twMerge(
         `flex mt-4 h-11
           rounded-lg px-2
           border-1 border-gray-400
           items-center justify-between
           ${hasError ? 'border-2 border-red-500' : ''}
-        `
-      }
+        `,
+        customStyle
+      )}
     >
       <input
         type={inputType}
